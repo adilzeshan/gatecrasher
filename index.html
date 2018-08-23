@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,31 @@
   <link rel="stylesheet" href="styles.css">
   <title>Gatecrasher</title>
 </head>
+
 <body>
   <h1>Welcome to Gatecrasher</h1>
+  
   <ul id="events"></ul>
   <button id="new-event-btn">Add New Event</button>
-  <div id="new-event-form" style="display: none">
-    <label for="description-input">description: </label>
-    <input id="description-input">
-    <button id="new-event-submit">Submit</button>
+
+  <div id="show-event-modal">
+    <span id="close-show-modal">&times;</span>
+    <div id="new-event-form">
+      <label for="description-input">description: </label>
+      <input id="description-input">
+      <button id="new-event-submit">Submit</button>
+    </div>
   </div>
-  <div id="selected-event"></div>
-  <script src="app.js"></script>
+
+  <hr/>
+
+  <div id="edit-event-modal">
+    <span id="close-edit-modal">&times;</span>
+    <div id="selected-event"></div>
+    <button id="edit-event-btn">Edit Event</button>
+  </div>
+
+    <script src="app.js"></script>
 </body>
+
 </html>
