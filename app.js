@@ -3,7 +3,8 @@ const ENDPOINT = 'https://gatecrashers.herokuapp.com';
 // Model
 let state = {
   events: [],
-  currentEvent: null
+  currentEvent: null,
+  loading: true
 };
 
 // Controller (connecting Model to View)
@@ -12,7 +13,10 @@ let controller = {
     return new Promise((res, rej) => {
       fetch(`${ENDPOINT}/events`)
         .then(data => data.json())
-        .then(data => res(data))
+        .then(data => {
+          state.loading = false;
+          res(data);
+        })
         .catch(err => {
           console.log(err);
           res([]);
@@ -59,12 +63,18 @@ let controller = {
     if (event) state.events.splice(index, 1);
 
     view.render(state);
+  },
+
+  getLoadingState: function getLoadingState() {
+    return state.loading;
   }
 };
 
 // View
 let view = {
   init: function init() {
+    view.render(state);
+
     document.getElementById('events').addEventListener('click', e => {
       if (e.target.className === 'event') {
         let nodeList = document.getElementById('events').childNodes;
@@ -247,7 +257,11 @@ let view = {
   },
 
   render: function render(state) {
-    // if (state.currentEvent === null) document.getElementById('edit-event-btn').style.display = "none";
+    if (controller.getLoadingState()) {
+      document.getElementsByClassName('loading')[0].classList.add('in-progress');
+    } else {
+      document.getElementsByClassName('loading')[0].classList.remove('in-progress');
+    }
 
     let fragment = document.createDocumentFragment();
 
@@ -263,6 +277,7 @@ let view = {
     document.getElementById('events').appendChild(fragment);
   }
 };
+
 
 // App starts
 controller.getEvents().then(data => {
