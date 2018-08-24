@@ -61,7 +61,6 @@ let view = {
         });
 
         e.target.className = 'event selected';
-        document.getElementById('edit-event-btn').style.display = "block";
 
         let event = controller.getEvent(e.target.id);
         let fragment = document.createDocumentFragment();
@@ -75,19 +74,36 @@ let view = {
 
         fragment.appendChild(ul);
 
-        document.getElementById('selected-event').innerHTML = '';
-        document.getElementById('selected-event').appendChild(fragment);
-        document.getElementById('edit-event-modal').style.display = 'block';
+        document.getElementById('event').innerHTML = '';
+        document.getElementById('event').appendChild(fragment);
       }
+
+      // Modal - click on event
+      // - Displays modal
+      // - Displays selected-event element
+      document.getElementsByClassName('modal')[0].classList.add('visible');
+      document.getElementsByClassName('selected-event')[0].classList.add('displayed');
     });
 
+    // Modal - new-event-btn
+    // - Displays modal
+    // - Displays new-event-form element
     document.getElementById('new-event-btn').addEventListener('click', () => {
-      document.getElementById('show-event-modal').style.display = 'block';
+      document.getElementsByClassName('modal')[0].classList.add('visible');
+      document.getElementsByClassName('new-event-form')[0].classList.add('displayed');
+
     });
 
     document.getElementById('edit-event-btn').addEventListener('click', e => {
       let currentEvent = controller.getEvent();
-      let stagingArea = document.getElementById('selected-event');
+      let stagingArea = document.getElementsByClassName('edit-event')[0];
+
+      // Modal - edit-event-btn
+      // - Hides selected-event element
+      // - Displays edit-event element
+      document.getElementsByClassName('selected-event')[0].classList.remove('displayed');
+      document.getElementsByClassName('edit-event')[0].classList.add('displayed');
+
 
       let fragment = document.createDocumentFragment();
       let descriptionLabel = document.createElement('span');
@@ -123,7 +139,11 @@ let view = {
             console.log(err);
           });
 
-
+          // Modal - submit button
+          // - Hides Modal after editing an event
+          // - Hides edit-event element
+          document.getElementsByClassName('modal')[0].classList.remove('visible');
+          document.getElementsByClassName('edit-event')[0].classList.remove('displayed');
 
       });
 
@@ -133,21 +153,20 @@ let view = {
 
       stagingArea.innerHTML = '';
       stagingArea.appendChild(fragment);
-
-      document.getElementById('show-event-modal').style.display = 'none';
     });
 
-    //Close Event Modal
-    document.getElementById('close-show-modal').addEventListener('click', (e) => {
-      document.getElementById('show-event-modal').style.display = 'none';
-    });
-    
-    document.getElementById('close-edit-modal').addEventListener('click', (e) => {
-      document.getElementById('edit-event-modal').style.display = 'none';
+    // Modal - modal--close span element
+    // Needs: refactoring
+    // - Hides modal, selected-event, new-event-form, edit-event elements
+    document.getElementsByClassName('modal--close')[0].addEventListener('click', (e) => {
+      document.getElementsByClassName('modal')[0].classList.remove('visible');
+      document.getElementsByClassName('selected-event')[0].classList.remove('displayed');
+      document.getElementsByClassName('new-event-form')[0].classList.remove('displayed');
+      document.getElementsByClassName('edit-event')[0].classList.remove('displayed');
     });
 
     document.getElementById('new-event-submit').addEventListener('click', () => {
-      const descriptionVal = document.getElementById('description-input').value;
+      let descriptionVal = document.getElementById('description-input').value;
 
       let body = {
         description: descriptionVal
@@ -169,12 +188,19 @@ let view = {
           console.log(err);
         });
 
-      document.getElementById('show-event-modal').style.display = 'none';
+      // Resetting the input value
+      document.getElementById('description-input').value = '';
+
+      // Modal - after submitting new event
+      // - Hides modal element
+      // - Hides new-event-form
+      document.getElementsByClassName('modal')[0].classList.remove('visible');
+      document.getElementsByClassName('new-event-form')[0].classList.remove('displayed');
     });
   },
 
   render: function render(state) {
-    if (state.currentEvent === null) document.getElementById('edit-event-btn').style.display = "none";
+    // if (state.currentEvent === null) document.getElementById('edit-event-btn').style.display = "none";
 
     let fragment = document.createDocumentFragment();
 
