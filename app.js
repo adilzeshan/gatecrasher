@@ -46,6 +46,19 @@ let controller = {
     }
 
     view.render(state);
+  },
+
+  deleteState: function deleteState(id) {
+    let index = null;
+    
+    let event = state.events.find((e, i) => {
+      index = i;
+      return id === e.id;
+    });
+
+    if (event) state.events.splice(index, 1);
+
+    view.render(state);
   }
 };
 
@@ -94,6 +107,27 @@ let view = {
 
     });
 
+    document.getElementById('delete-event-btn').addEventListener('click', e => {
+      let currentEvent = controller.getEvent();
+
+      fetch(`${ENDPOINT}/event/${currentEvent.id}/delete`)
+        .then(data => data.json())
+        .then(event => {
+          controller.deleteState(currentEvent.id);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      
+      // Modal - delete-event-btn
+      // - Hides modal
+      // - Hides selected-event element
+      document.getElementsByClassName('modal')[0].classList.remove('visible');
+      document.getElementsByClassName('selected-event')[0].classList.remove('displayed');
+    });
+
+    
+
     document.getElementById('edit-event-btn').addEventListener('click', e => {
       let currentEvent = controller.getEvent();
       let stagingArea = document.getElementsByClassName('edit-event')[0];
@@ -104,23 +138,33 @@ let view = {
       document.getElementsByClassName('selected-event')[0].classList.remove('displayed');
       document.getElementsByClassName('edit-event')[0].classList.add('displayed');
 
+      let description = document.getElementById('description-input-edit');
+      let host = document.getElementById('host-input-edit');
+      let attendees = document.getElementById('attendees-input-edit');
+      let duration = document.getElementById('duration-input-edit');
+      let date = document.getElementById('date-input-edit');
+      let location = document.getElementById('location-input-edit');
 
-      let fragment = document.createDocumentFragment();
-      let descriptionLabel = document.createElement('span');
-      let description = document.createElement('input');
-      let submitBtn = document.createElement('button');
-
-      descriptionLabel.innerText = 'description: ';
       description.value = currentEvent.description;
-      description.id = 'edit-description';
-      submitBtn.innerText = "Submit";
+      host.value = currentEvent.host;
+      attendees.value = currentEvent.attendees;
+      duration.value = currentEvent.duration;
+      date.value = currentEvent.date;
+      location.value = currentEvent.location;
+
+      let submitBtn = document.getElementById('edit-event-submit');
 
       submitBtn.addEventListener('click', e => {
-        let description = document.getElementById('edit-description').value;
-
         let body = {
-          description
+          description: description.value,
+          host: host.value,
+          attendees: attendees.value,
+          duration: duration.value,
+          date: date.value,
+          location: location.value
         };
+
+        console.log(body);
 
         // PATCH request
         fetch(`${ENDPOINT}/event/${currentEvent.id}`, {
@@ -146,13 +190,6 @@ let view = {
           document.getElementsByClassName('edit-event')[0].classList.remove('displayed');
 
       });
-
-      fragment.appendChild(descriptionLabel);
-      fragment.appendChild(description);
-      fragment.appendChild(submitBtn);
-
-      stagingArea.innerHTML = '';
-      stagingArea.appendChild(fragment);
     });
 
     // Modal - modal--close span element
@@ -166,10 +203,20 @@ let view = {
     });
 
     document.getElementById('new-event-submit').addEventListener('click', () => {
-      let descriptionVal = document.getElementById('description-input').value;
+      let description = document.getElementById('description-input').value;
+      let host = document.getElementById('host-input').value;
+      let duration = document.getElementById('duration-input').value;
+      let date = document.getElementById('date-input').value;
+      let location = document.getElementById('location-input').value;
+      let attendees = document.getElementById('attendees-input').value;
 
       let body = {
-        description: descriptionVal
+        description,
+        host,
+        duration,
+        date,
+        location,
+        attendees
       };
 
       fetch(`${ENDPOINT}/event`, {

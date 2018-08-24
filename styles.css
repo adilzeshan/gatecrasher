@@ -63,7 +63,7 @@ h1 {
 .modal__container {
     position: absolute;
     background: white;
-    min-height: 50%;
+    /* min-height: 50%; */
     top: 20vh;
     width: 50%;
     left: 25%;
@@ -87,12 +87,28 @@ h1 {
     display: none;
 }
 
+.edit-event div {
+    padding: 0px 0px 0.5em 0px;
+}
+
+.edit-event label {
+    padding: 0px 1em 0px 0px;
+}
+
 .selected-event {
     display: none;
 }
 
 .new-event-form {
     display: none;
+}
+
+.new-event-form div {
+    padding: 0px 0px 0.5em 0px;
+}
+
+.new-event-form label {
+    padding: 0px 1em 0px 0px;
 }
 
 .displayed {
@@ -102,5 +118,14 @@ h1 {
 #edit-event-btn {
     float: right;
 }
+
+#new-event-submit {
+    float: right;
+}
+
+#edit-event-submit {
+    float: right;
+}
+
 
 

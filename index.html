@@ -11,7 +11,7 @@
 
 <body>
   <h1>Welcome to Gatecrasher</h1>
-  
+
   <ul id="events"></ul>
   <button id="new-event-btn">Add New Event</button>
 
@@ -23,20 +23,82 @@
         <div class="selected-event">
           <div id="event"></div>
           <button id="edit-event-btn">Edit Event</button>
+          <button id="delete-event-btn">Delete</button>
         </div>
         <!-- Event creation -->
         <div class="new-event-form">
-          <label for="description-input">description: </label>
-          <input id="description-input">
+          <div>
+            <label for="description-input">description: </label>
+            <input id="description-input">
+          </div>
+
+          <div>
+            <label for="attendees-input">attendees: </label>
+            <input id="attendees-input">
+          </div>
+
+          <div>
+            <label for="host-input">host: </label>
+            <input id="host-input">
+          </div>
+
+          <div>
+            <label for="duration-input">duration: </label>
+            <input id="duration-input">
+          </div>
+
+          <div>
+            <label for="date-input">date: </label>
+            <input id="date-input">
+          </div>
+
+          <div>
+            <label for="location-input">location: </label>
+            <input id="location-input">
+          </div>
+
           <button id="new-event-submit">Submit</button>
         </div>
 
-        <div class="edit-event"></div>
+        <!-- Event Editing -->
+        <div class="edit-event">
+          <div>
+            <label for="description-input-edit">description: </label>
+            <input id="description-input-edit">
+          </div>
+
+          <div>
+            <label for="attendees-input-edit">attendees: </label>
+            <input id="attendees-input-edit">
+          </div>
+
+          <div>
+            <label for="host-input-edit">host: </label>
+            <input id="host-input-edit">
+          </div>
+
+          <div>
+            <label for="duration-input-edit">duration: </label>
+            <input id="duration-input-edit">
+          </div>
+
+          <div>
+            <label for="date-input-edit">date: </label>
+            <input id="date-input-edit">
+          </div>
+
+          <div>
+            <label for="location-input-edit">location: </label>
+            <input id="location-input-edit">
+          </div>
+
+          <button id="edit-event-submit">Submit</button>
+        </div>
       </div>
     </div>
   </div>
 
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 
 </html>
