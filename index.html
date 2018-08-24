@@ -15,21 +15,25 @@
   <ul id="events"></ul>
   <button id="new-event-btn">Add New Event</button>
 
-  <div id="show-event-modal">
-    <span id="close-show-modal">&times;</span>
-    <div id="new-event-form">
-      <label for="description-input">description: </label>
-      <input id="description-input">
-      <button id="new-event-submit">Submit</button>
+  <div class="modal">
+    <div class="modal__container">
+      <span class="modal--close">&times;</span>
+      <div class="modal__content">
+        <!-- Event Display -->
+        <div class="selected-event">
+          <div id="event"></div>
+          <button id="edit-event-btn">Edit Event</button>
+        </div>
+        <!-- Event creation -->
+        <div class="new-event-form">
+          <label for="description-input">description: </label>
+          <input id="description-input">
+          <button id="new-event-submit">Submit</button>
+        </div>
+
+        <div class="edit-event"></div>
+      </div>
     </div>
-  </div>
-
-  <hr/>
-
-  <div id="edit-event-modal">
-    <span id="close-edit-modal">&times;</span>
-    <div id="selected-event"></div>
-    <button id="edit-event-btn">Edit Event</button>
   </div>
 
     <script src="app.js"></script>
