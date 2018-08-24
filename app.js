@@ -54,7 +54,7 @@ let controller = {
 
   deleteState: function deleteState(id) {
     let index = null;
-    
+
     let event = state.events.find((e, i) => {
       index = i;
       return id === e.id;
@@ -76,14 +76,14 @@ let view = {
     view.render(state);
 
     document.getElementById('events').addEventListener('click', e => {
-      if (e.target.className === 'event') {
+      if (e.target.classList.contains('event')) {
         let nodeList = document.getElementById('events').childNodes;
 
         nodeList.forEach(el => {
-          el.className = 'event';
+          el.classList.add('event');
         });
 
-        e.target.className = 'event selected';
+        e.target.classList.add('selected');
 
         let event = controller.getEvent(e.target.id);
         let fragment = document.createDocumentFragment();
@@ -99,13 +99,13 @@ let view = {
 
         document.getElementById('event').innerHTML = '';
         document.getElementById('event').appendChild(fragment);
-      }
 
-      // Modal - click on event
-      // - Displays modal
-      // - Displays selected-event element
-      document.getElementsByClassName('modal')[0].classList.add('visible');
-      document.getElementsByClassName('selected-event')[0].classList.add('displayed');
+        // Modal - click on event
+        // - Displays modal
+        // - Displays selected-event element
+        document.getElementsByClassName('modal')[0].classList.add('visible');
+        document.getElementsByClassName('selected-event')[0].classList.add('displayed');
+      }
     });
 
     // Modal - new-event-btn
@@ -128,7 +128,7 @@ let view = {
         .catch(err => {
           console.log(err);
         });
-      
+
       // Modal - delete-event-btn
       // - Hides modal
       // - Hides selected-event element
@@ -136,7 +136,7 @@ let view = {
       document.getElementsByClassName('selected-event')[0].classList.remove('displayed');
     });
 
-    
+
 
     document.getElementById('edit-event-btn').addEventListener('click', e => {
       let currentEvent = controller.getEvent();
@@ -193,11 +193,11 @@ let view = {
             console.log(err);
           });
 
-          // Modal - submit button
-          // - Hides Modal after editing an event
-          // - Hides edit-event element
-          document.getElementsByClassName('modal')[0].classList.remove('visible');
-          document.getElementsByClassName('edit-event')[0].classList.remove('displayed');
+        // Modal - submit button
+        // - Hides Modal after editing an event
+        // - Hides edit-event element
+        document.getElementsByClassName('modal')[0].classList.remove('visible');
+        document.getElementsByClassName('edit-event')[0].classList.remove('displayed');
 
       });
     });
@@ -267,7 +267,7 @@ let view = {
 
     state.events.forEach((element) => {
       let listElement = document.createElement('li');
-      listElement.className = 'event';
+      listElement.classList.add('event');
       listElement.setAttribute('id', element.id);
       listElement.innerText = element.description;
       fragment.appendChild(listElement);
