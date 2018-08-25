@@ -75,6 +75,8 @@ let view = {
   init: function init() {
     view.render(state);
 
+    // document.getElementsByClassName('new-event-btn')[0].classList.add('displayed');
+
     document.getElementById('events').addEventListener('click', e => {
       if (e.target.classList.contains('event')) {
         let nodeList = document.getElementById('events').childNodes;
@@ -88,6 +90,7 @@ let view = {
         let event = controller.getEvent(e.target.id);
         let fragment = document.createDocumentFragment();
         let ul = document.createElement('ul');
+        // ul.id = 'event-list';
 
         for (var el in event) {
           let li = document.createElement('li');
@@ -108,14 +111,6 @@ let view = {
       }
     });
 
-    // Modal - new-event-btn
-    // - Displays modal
-    // - Displays new-event-form element
-    document.getElementById('new-event-btn').addEventListener('click', () => {
-      document.getElementsByClassName('modal')[0].classList.add('visible');
-      document.getElementsByClassName('new-event-form')[0].classList.add('displayed');
-
-    });
 
     document.getElementById('delete-event-btn').addEventListener('click', e => {
       let currentEvent = controller.getEvent();
@@ -274,9 +269,29 @@ let view = {
     });
 
     document.getElementById('events').innerHTML = '';
-    document.getElementById('events').appendChild(fragment);
+    document.getElementById('events').appendChild(fragment); 
+    
+    // New event btn
+    let events = document.getElementById('events');
+    let newEventBtn = document.createElement('li');
+    let addSign = document.createElement('span');
+    addSign.innerText = '+';
+    newEventBtn.appendChild(addSign);
+    newEventBtn.classList.add('new-event-btn');
+    events.appendChild(newEventBtn);
+    // New event btn
+    
+    // Modal - new-event-btn
+    // - Displays modal
+    // - Displays new-event-form element
+    document.getElementsByClassName('new-event-btn')[0].addEventListener('click', () => {
+      document.getElementsByClassName('new-event-btn')[0].classList.remove('event');
+      document.getElementsByClassName('new-event-btn')[0].classList.remove('selected');
+      document.getElementsByClassName('modal')[0].classList.add('visible');
+      document.getElementsByClassName('new-event-form')[0].classList.add('displayed');
+    });
   }
-};
+}
 
 
 // App starts
