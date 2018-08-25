@@ -15,7 +15,7 @@ ul {
 #events {
     display: flex;
     flex-flow: row wrap;
-    padding: 0;
+    padding: 0 15vw;
     margin: 0;
     justify-content: center;
 }
@@ -77,6 +77,10 @@ h1 {
         right: 0;
         width: 100%;
         left: 0;
+    }
+
+    #events {
+        padding: 0 5vw;
     }
 }
 
